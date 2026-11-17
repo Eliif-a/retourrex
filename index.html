@@ -34,10 +34,11 @@ h2{font-size:clamp(28px,4.5vw,40px);font-weight:900;text-align:center;margin-bot
 section{padding:72px 0}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--green);color:#fff;font:inherit;font-weight:800;font-size:19px;text-decoration:none;border:0;border-radius:999px;padding:16px 32px;cursor:pointer;box-shadow:0 10px 24px -10px var(--green);transition:transform .15s,background .15s}
-.btn:hover{background:var(--green-dark);transform:translateY(-2px)}
+@media (hover:hover){.btn:hover{background:var(--green-dark);transform:translateY(-2px)}}
+.btn:active{background:var(--green-dark)}
 
 /* Header */
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px)}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:24px}
 .mark{color:var(--ink);display:block}
@@ -46,11 +47,9 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 9
 .nav .btn{padding:10px 20px;font-size:16px;box-shadow:none}
 
 /* Hero */
-.hero{text-align:center;padding:24px 0 72px;background:radial-gradient(700px 420px at 50% 30%,var(--green-soft),transparent 70%)}
+.hero{text-align:center;padding:24px 0 72px}
 .logo-big{display:flex;align-items:center;justify-content:center;gap:18px;margin:16px auto 36px;text-align:left;flex-wrap:wrap}
-.logo-big .mark{width:clamp(150px,26vw,220px);height:auto;aspect-ratio:220/150;animation:ride 3s ease-in-out infinite}
-@keyframes ride{50%{transform:translateX(6px)}}
-@media (prefers-reduced-motion: reduce){.logo-big .mark{animation:none}}
+.logo-big .mark{width:clamp(150px,26vw,220px);height:auto;aspect-ratio:220/150;}
 .word{font-weight:900;font-style:italic;font-size:clamp(46px,8vw,76px);letter-spacing:-.03em;line-height:1}
 .word span{color:var(--green)}
 .slogan-hero{font-weight:800;font-size:clamp(18px,2.6vw,24px);margin-top:4px}
@@ -60,6 +59,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 9
 .hero p{font-size:clamp(18px,2.4vw,21px);color:var(--muted);max-width:580px;margin:0 auto 30px}
 .prices{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:30px}
 .price{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 26px;min-width:150px}
+@media (max-width:640px){.prices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.price{min-width:0;padding:12px 8px}.price b{font-size:26px}.price .add{font-size:13px}}
 .price .ico{font-size:28px}
 .price b{display:block;font-size:30px;font-weight:900;color:var(--green)}
 .price small{color:var(--muted);font-weight:700}
@@ -96,7 +96,8 @@ form .btn{width:100%}
 #msg{text-align:center;font-weight:700;color:var(--green-dark);min-height:1.2em;font-size:16px}
 
 .price{font:inherit;color:inherit;cursor:pointer;transition:transform .15s,border-color .15s}
-.price:hover{transform:translateY(-3px);border-color:var(--green)}
+@media (hover:hover){.price:hover{transform:translateY(-3px);border-color:var(--green)}}
+.price:active{border-color:var(--green);background:var(--green-soft)}
 .price .add{display:block;margin-top:6px;font-size:14px;font-weight:800;color:var(--green-dark)}
 .btn.ghost{background:transparent;color:var(--green-dark);border:2px solid var(--green);box-shadow:none}
 .btn.ghost:hover{background:var(--green-soft)}
@@ -140,7 +141,8 @@ footer .small{font-size:14px;margin-top:14px}
 .mobile-cta{display:none}
 @media (max-width:640px){
   .nav .btn{display:none}
-  .mobile-cta{display:flex;position:fixed;left:14px;right:14px;bottom:14px;z-index:30}
+  .mobile-cta{display:flex;position:fixed;left:14px;right:14px;bottom:14px;z-index:30;transform:translateY(140%);transition:transform .25s ease;box-shadow:0 8px 20px -8px rgba(0,0,0,.35)}
+  .mobile-cta.show{transform:none}
   footer{padding-bottom:100px}
 }
 </style>
@@ -192,7 +194,7 @@ footer .small{font-size:14px;margin-top:14px}
         <button type="button" class="price" data-add="p"><div class="ico">📦</div><b>6,50 €</b><small>pro Paket</small><span class="add">+ Paket hinzufügen</span></button>
         <button type="button" class="price" data-add="b"><div class="ico">✉️</div><b>4,50 €</b><small>pro Brief</small><span class="add">+ Brief hinzufügen</span></button>
       </div>
-      <a class="btn" href="#buchen">Jetzt Abholung anfragen</a>
+      <a class="btn" href="#buchen" id="heroCta">Jetzt Abholung anfragen</a>
       <div class="trust"><span>🚲 Per Fahrrad</span><span>📍 Ganz Troisdorf</span><span>💶 Bar bezahlen</span></div>
     </div>
   </section>
@@ -339,7 +341,7 @@ $('bookForm').addEventListener('submit',async e=>{
   try{
     let ok=false;
     if(WEB3FORMS_KEY){
-      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',signal:(AbortSignal.timeout?AbortSignal.timeout(12000):undefined),headers:{'Content-Type':'application/json',Accept:'application/json'},
         body:JSON.stringify({access_key:WEB3FORMS_KEY, subject, from_name:'Retourrex Website',
           ...(($('fMail').value)?{email:$('fMail').value}:{}), ...data})});
       ok=(await r.json()).success===true;
@@ -349,7 +351,7 @@ $('bookForm').addEventListener('submit',async e=>{
       const fields={_subject:subject, _template:'table', _captcha:'false', ...(($('fMail').value)?{_replyto:$('fMail').value}:{}), ...data};
       Object.entries(fields).forEach(([k,v])=>fd.append(k,v));
       if($('fFile').files[0]) fd.append('attachment',$('fFile').files[0]);
-      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{Accept:'application/json'},body:fd});
+      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{Accept:'application/json'},body:fd,signal:(AbortSignal.timeout?AbortSignal.timeout(12000):undefined)});
       const j=await r.json();
       ok=j.success===true||j.success==='true';
     }
@@ -363,6 +365,15 @@ $('bookForm').addEventListener('submit',async e=>{
   location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
   showDone(true);
 });
+// Fester Handy-Button nur zeigen, wenn Start-Button und Formular nicht sichtbar sind
+(()=>{
+  const cta=document.querySelector('.mobile-cta'); if(!cta||!('IntersectionObserver' in window)) return;
+  const vis={hero:true,form:false};
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ vis[e.target.id==='heroCta'?'hero':'form']=e.isIntersecting; });
+    cta.classList.toggle('show',!vis.hero&&!vis.form); });
+  io.observe($('heroCta')); io.observe($('buchen'));
+})();
+
 // Upload: Vorschau, Größe prüfen, Drag & Drop
 const MAX=5*1024*1024;
 function showFile(){
