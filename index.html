@@ -121,6 +121,52 @@ form .btn{width:100%}
 .drop small{color:var(--muted);font-weight:600}
 .drop img{width:64px;height:64px;object-fit:cover;border-radius:10px;margin-left:auto;flex:none}
 .link{background:none;border:0;color:var(--green-dark);font:inherit;font-size:15px;font-weight:800;cursor:pointer;padding:6px 0;text-decoration:underline}
+
+/* ===== Bestell-Ablauf ===== */
+form{gap:0}
+.progress{list-style:none;padding:0;margin:0 0 22px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;counter-reset:none}
+.progress li{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:15px;color:var(--muted);padding:8px 4px;border-radius:999px;background:var(--bg);border:2px solid var(--line)}
+.progress li span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--muted);font-size:13px}
+.progress li.on{color:var(--green-dark);border-color:var(--green-soft);background:var(--green-soft)}
+.progress li.on span{background:var(--green);color:#fff}
+.progress li.cur{border-color:var(--green)}
+fieldset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:12px}
+legend{font-size:22px;font-weight:900;margin-bottom:14px;padding:0}
+.q{font-weight:800;margin:10px 0 0}
+.q small,label small{font-weight:600;color:var(--muted)}
+.hint{font-size:15px;color:var(--muted);margin:0}
+.err{color:#c0392b;font-weight:700;font-size:15px;margin:0;min-height:0}
+.err:empty{display:none}
+input.bad{border-color:#c0392b}
+.field{display:grid;gap:4px}
+.field label{margin:0}
+.counter{padding:14px}
+.counter button{width:44px;height:44px;font-size:24px}
+.counter output{font-size:22px}
+.drop.has{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+details.code{background:none;border:0;padding:0;margin:0;border-radius:0}
+details.code summary::after{content:none}
+details.code summary{cursor:pointer;font-weight:800;color:var(--green-dark);font-size:15px;padding:4px 0;list-style:none}
+details.code summary::-webkit-details-marker{display:none}
+details.code summary::before{content:"+ "}
+details.code[open] summary::before{content:"– "}
+details.code input{margin-top:8px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chip{font:inherit;font-weight:800;font-size:16px;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;-webkit-tap-highlight-color:transparent}
+.chip small{font-weight:600;color:var(--muted);font-size:13px}
+.chip[aria-checked="true"]{border-color:var(--green);background:var(--green);color:#fff}
+.chip[aria-checked="true"] small{color:#fff;opacity:.9}
+#times{grid-template-columns:1fr}
+#times .chip{flex-direction:row;justify-content:center;padding:14px}
+.summary{white-space:pre-line}
+.nav-btns{display:flex;gap:10px;margin-top:22px}
+.nav-btns .btn{flex:1;padding:16px 18px;font-size:18px}
+.nav-btns .btn{width:auto;min-width:0;border-radius:18px}
+.nav-btns .btn.ghost{flex:0 0 58px;padding:16px 0;font-size:22px}
+#msg:empty{display:none}
+input{font-size:17px}
+@media (max-width:560px){ form{padding:20px 16px} legend{font-size:20px} }
+
 /* FAQ */
 .faq{max-width:700px;margin:0 auto}
 details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
@@ -214,37 +260,67 @@ footer .small{font-size:14px;margin-top:14px}
   <section class="book" id="buchen">
     <div class="wrap">
       <h2>Abholung anfragen</h2>
-      <p class="sub">Dauert keine Minute. Wir melden uns mit einer Bestätigung.</p>
+      <p class="sub">3 kurze Schritte, fertig.</p>
       <form id="bookForm" novalidate>
-        <div class="row">
-          <div><label for="fName">Ihr Name</label><input id="fName" autocomplete="name" required></div>
-          <div><label for="fPhone">Telefon</label><input id="fPhone" type="tel" autocomplete="tel" required></div>
-        </div>
-        <div><label for="fMail">E-Mail <small style="font-weight:600;color:var(--muted)">(für Ihre Bestätigung, optional)</small></label><input id="fMail" type="email" autocomplete="email" placeholder="name@beispiel.de"></div>
-        <div><label for="fAddr">Adresse in Troisdorf</label><input id="fAddr" autocomplete="street-address" placeholder="Straße, Hausnummer" required></div>
-        <div><label for="fDate">Wann passt es Ihnen?</label><input id="fDate" placeholder="z. B. Freitag nachmittags" required></div>
-        <div>
-          <label>Was dürfen wir abholen?</label>
+        <ol class="progress" aria-label="Fortschritt">
+          <li class="on" data-s="1"><span>1</span>Was</li>
+          <li data-s="2"><span>2</span>Wann</li>
+          <li data-s="3"><span>3</span>Wo</li>
+        </ol>
+
+        <!-- Schritt 1 -->
+        <fieldset class="step-pane" data-step="1">
+          <legend>Was dürfen wir abholen?</legend>
           <div class="counters">
             <div class="counter"><span>📦 Pakete</span><div class="ctl"><button type="button" data-t="p" data-d="-1" aria-label="Ein Paket weniger">–</button><output id="cP">1</output><button type="button" data-t="p" data-d="1" aria-label="Ein Paket mehr">+</button></div></div>
             <div class="counter"><span>✉️ Briefe</span><div class="ctl"><button type="button" data-t="b" data-d="-1" aria-label="Ein Brief weniger">–</button><output id="cB">0</output><button type="button" data-t="b" data-d="1" aria-label="Ein Brief mehr">+</button></div></div>
           </div>
-        </div>
-        <div class="ret">
-          <label>Retouren-QR-Code oder Etikett <small style="font-weight:600;color:var(--muted)">(optional)</small></label>
+          <p class="err" id="eCount"></p>
+
+          <p class="q">Haben Sie einen Retouren-QR-Code? <small>(optional)</small></p>
           <label class="drop" for="fFile" id="dropZone">
             <input id="fFile" type="file" accept="image/*,application/pdf">
             <span class="drop-ico">📷</span>
-            <span id="dropText"><b>Foto oder Screenshot hochladen</b><br><small>QR-Code aus der Shop-Mail oder Foto vom Etikett, max. 5 MB</small></span>
+            <span id="dropText"><b>Screenshot oder Foto hochladen</b><br><small>aus der Shop-Mail oder vom Etikett</small></span>
             <img id="dropPrev" alt="" hidden>
           </label>
           <button type="button" class="link" id="fileClear" hidden>Datei entfernen</button>
-          <label for="fCode" style="margin-top:12px">Oder Retouren-Code / Sendungsnummer</label>
-          <input id="fCode" placeholder="z. B. 1Z999AA10123456784 oder Rücksende-Code">
+          <details class="code">
+            <summary>Ich habe nur einen Code</summary>
+            <input id="fCode" placeholder="Retouren-Code oder Sendungsnummer" autocomplete="off">
+          </details>
+          <p class="hint">Kein QR-Code? Kein Problem, dann legen Sie den Retourenschein einfach zum Paket.</p>
+        </fieldset>
+
+        <!-- Schritt 2 -->
+        <fieldset class="step-pane" data-step="2" hidden>
+          <legend>Wann passt es Ihnen?</legend>
+          <p class="q">Tag</p>
+          <div class="chips" id="days" role="radiogroup" aria-label="Tag"></div>
+          <p class="q">Uhrzeit</p>
+          <div class="chips" id="times" role="radiogroup" aria-label="Uhrzeit">
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="vormittags (8–12 Uhr)">☀️ 8–12 Uhr</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="mittags (12–16 Uhr)">🌤️ 12–16 Uhr</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="abends (16–20 Uhr)">🌙 16–20 Uhr</button>
+          </div>
+          <p class="err" id="eWhen"></p>
+        </fieldset>
+
+        <!-- Schritt 3 -->
+        <fieldset class="step-pane" data-step="3" hidden>
+          <legend>Wo holen wir ab?</legend>
+          <div class="field"><label for="fName">Name</label><input id="fName" autocomplete="name" enterkeyhint="next"><p class="err"></p></div>
+          <div class="field"><label for="fAddr">Straße &amp; Hausnummer <small>in Troisdorf</small></label><input id="fAddr" autocomplete="street-address" enterkeyhint="next"><p class="err"></p></div>
+          <div class="field"><label for="fPhone">Handynummer <small>für Rückfragen</small></label><input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next"><p class="err"></p></div>
+          <div class="field"><label for="fMail">E-Mail <small>optional, für die Bestätigung</small></label><input id="fMail" type="email" inputmode="email" autocomplete="email" enterkeyhint="done"><p class="err"></p></div>
+          <div class="summary" id="sum"></div>
+        </fieldset>
+
+        <div class="nav-btns">
+          <button type="button" class="btn ghost" id="back" hidden aria-label="Zurück">←</button>
+          <button type="button" class="btn" id="next">Weiter · <span class="price-now">6,50 €</span></button>
+          <button type="submit" class="btn" id="send" hidden>Jetzt anfragen ✓</button>
         </div>
-        <div class="total"><span>Ihr Preis</span><b id="total">6,50 €</b></div>
-        <button class="btn" type="submit">Anfrage senden ✉️</button>
-        <p class="tip">Ein Klick genügt: Retourrex wird sofort benachrichtigt und meldet sich bei Ihnen. Kein Upload? Kein Problem, dann halten Sie den Retourenschein bei der Abholung einfach bereit.</p>
         <p id="msg" role="status"></p>
       </form>
       <div class="done" id="done" hidden tabindex="-1">
@@ -285,38 +361,108 @@ footer .small{font-size:14px;margin-top:14px}
 
 <script>
 /* ===== EINSTELLUNG =====
-   Bestellungen gehen direkt per FormSubmit (formsubmit.co) als E-Mail an retourrex@outlook.de.
-   Einmalig nötig: Die erste Bestellung löst eine Aktivierungs-Mail an retourrex@outlook.de aus,
-   dort auf "Activate Form" klicken. Danach kommt jede Bestellung sofort an.
-   Optional statt FormSubmit: Web3Forms-Schlüssel hier eintragen. */
+   Bestellungen gehen direkt als E-Mail an retourrex@outlook.de.
+   Am zuverlässigsten: kostenlosen Schlüssel auf https://web3forms.com für retourrex@outlook.de holen
+   und hier eintragen. Ohne Schlüssel wird FormSubmit (formsubmit.co) genutzt; dort muss die erste
+   Bestellung einmal per Klick auf "Activate Form" in der Mail freigeschaltet werden.
+   Klappt beides nicht, öffnet sich ersatzweise das E-Mail-Programm des Kunden. */
 const WEB3FORMS_KEY = '';
 const EMAIL='retourrex@outlook.de', P=6.5, B=4.5;
 
 const $=id=>document.getElementById(id);
 const eur=n=>n.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+const esc=t=>String(t).replace(/[<>&"]/g,ch=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[ch]));
 const c={p:1,b:0};
-let pristine=true;
-function render(){ $('cP').textContent=c.p; $('cB').textContent=c.b; $('total').textContent=eur(c.p*P+c.b*B); }
+const when={day:'',time:''};
+let pristine=true, step=1;
+
+function price(){ return eur(c.p*P+c.b*B); }
+function render(){
+  $('cP').textContent=c.p; $('cB').textContent=c.b;
+  document.querySelectorAll('.price-now').forEach(el=>el.textContent=price());
+  if(c.p+c.b>0) $('eCount').textContent='';
+}
 function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),2200); }
 
 document.querySelectorAll('.counter button').forEach(btn=>btn.addEventListener('click',()=>{
   pristine=false; const t=btn.dataset.t; c[t]=Math.max(0,Math.min(30,c[t]+ +btn.dataset.d)); render();
 }));
-// Preis-Karten anklickbar: fügen etwas hinzu und springen zum Formular
+// Preis-Karten oben: fügen etwas hinzu und springen zum Formular
 document.querySelectorAll('[data-add]').forEach(card=>card.addEventListener('click',()=>{
   const t=card.dataset.add;
   if(pristine){ c.p=0; c.b=0; pristine=false; }
-  c[t]=Math.min(30,c[t]+1); render();
+  c[t]=Math.min(30,c[t]+1); render(); goStep(1,false);
   toast(t==='p' ? `📦 Paket hinzugefügt (${c.p})` : `✉️ Brief hinzugefügt (${c.b})`);
   $('buchen').scrollIntoView({behavior:'smooth'});
 }));
 
-function summary(){
-  return `📍 ${$('fAddr').value}, Troisdorf\n🕒 ${$('fDate').value}\n📦 ${c.p} Paket(e) · ✉️ ${c.b} Brief(e)\n💶 ${eur(c.p*P+c.b*B)} (bar bei Abholung)`;
+// Tage: die nächsten 6 Tage ohne Sonntag
+(()=>{
+  const wd=['So','Mo','Di','Mi','Do','Fr','Sa'], box=$('days'); const d=new Date(); let n=0, i=0;
+  while(n<6){
+    const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+i); i++;
+    if(x.getDay()===0) continue;
+    const label = i===1?'Heute': i===2?'Morgen': wd[x.getDay()];
+    const full = `${wd[x.getDay()]}, ${x.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})}`;
+    const b=document.createElement('button'); b.type='button'; b.className='chip day'; b.setAttribute('role','radio'); b.setAttribute('aria-checked','false');
+    b.dataset.v=(label==='Heute'||label==='Morgen')?`${label} (${full})`:full;
+    b.innerHTML=`<b>${label}</b><small>${x.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})}</small>`;
+    box.appendChild(b); n++;
+  }
+})();
+function pick(group,key){
+  group.addEventListener('click',e=>{
+    const b=e.target.closest('.chip'); if(!b) return;
+    group.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-checked',x===b?'true':'false'));
+    when[key]=b.dataset.v; $('eWhen').textContent='';
+  });
 }
+pick($('days'),'day'); pick($('times'),'time');
+
+// Schritte
+function setErr(id,msg){ const inp=$(id), e=inp.parentElement.querySelector('.err'); inp.classList.toggle('bad',!!msg); inp.setAttribute('aria-invalid',msg?'true':'false'); e.textContent=msg||''; }
+function valid(s){
+  if(s===1){ if(c.p+c.b<1){ $('eCount').textContent='Bitte mindestens ein Paket oder einen Brief wählen.'; return false; } return true; }
+  if(s===2){
+    if(!when.day||!when.time){ $('eWhen').textContent=!when.day&&!when.time?'Bitte Tag und Uhrzeit wählen.':!when.day?'Bitte noch einen Tag wählen.':'Bitte noch eine Uhrzeit wählen.'; return false; }
+    return true;
+  }
+  let ok=true, first=null;
+  const chk=(id,cond,msg)=>{ const bad=!cond; setErr(id,bad?msg:''); if(bad){ ok=false; first=first||id; } };
+  chk('fName',$('fName').value.trim().length>=2,'Bitte Ihren Namen eingeben.');
+  chk('fAddr',/\d/.test($('fAddr').value)&&$('fAddr').value.trim().length>=4,'Bitte Straße und Hausnummer eingeben.');
+  chk('fPhone',$('fPhone').value.replace(/\D/g,'').length>=6,'Bitte eine Telefonnummer eingeben.');
+  chk('fMail',!$('fMail').value.trim()||/^\S+@\S+\.\S+$/.test($('fMail').value.trim()),'Diese E-Mail sieht nicht richtig aus.');
+  if(first) $(first).focus();
+  return ok;
+}
+function summary(){
+  const lines=[`📦 ${c.p} Paket${c.p===1?'':'e'} · ✉️ ${c.b} Brief${c.b===1?'':'e'}`, `🕒 ${when.day}, ${when.time}`];
+  if($('fAddr').value.trim()) lines.push(`📍 ${$('fAddr').value.trim()}, Troisdorf`);
+  if($('fFile').files[0]) lines.push('🔳 QR-Code wird mitgeschickt'); else if($('fCode').value.trim()) lines.push(`🔳 Code: ${$('fCode').value.trim()}`);
+  lines.push(`💶 ${price()} bar bei Abholung`);
+  return lines.join('\n');
+}
+function goStep(s,scroll=true){
+  step=s;
+  document.querySelectorAll('.step-pane').forEach(p=>p.hidden=+p.dataset.step!==s);
+  document.querySelectorAll('.progress li').forEach(li=>{ li.classList.toggle('on',+li.dataset.s<=s); li.classList.toggle('cur',+li.dataset.s===s); });
+  $('back').hidden=s===1; $('next').hidden=s===3; $('send').hidden=s!==3;
+  $('next').innerHTML = s===1 ? `Weiter · <span class="price-now">${price()}</span>` : 'Weiter →';
+  $('msg').textContent='';
+  if(s===3) $('sum').textContent=summary();
+  if(scroll){ const top=$('bookForm').getBoundingClientRect().top+scrollY-90; window.scrollTo({top,behavior:'smooth'}); }
+}
+$('next').addEventListener('click',()=>{ if(valid(step)) goStep(step+1); });
+$('back').addEventListener('click',()=>goStep(step-1));
+['fName','fAddr','fPhone','fMail'].forEach(id=>{
+  $(id).addEventListener('input',()=>{ if($(id).classList.contains('bad')) setErr(id,''); });
+  $(id).addEventListener('blur',()=>{ if(step===3) $('sum').textContent=summary(); });
+});
+
 function showDone(viaMail){
-  if(viaMail) $('dText').innerHTML='Bitte senden Sie jetzt noch die E-Mail ab, die sich geöffnet hat. Danach melden wir uns unter <b id="dPhone"></b>.';
-  $('dName').textContent=$('fName').value.split(' ')[0];
+  if(viaMail) $('dText').innerHTML='Fast geschafft: Bitte senden Sie noch die E-Mail ab, die sich geöffnet hat. Danach melden wir uns unter <b id="dPhone"></b>.';
+  $('dName').textContent=$('fName').value.trim().split(' ')[0];
   $('dPhone').textContent=$('fPhone').value;
   $('dSum').textContent=summary();
   $('bookForm').hidden=true; $('done').hidden=false; $('done').focus();
@@ -325,46 +471,41 @@ function showDone(viaMail){
 
 $('bookForm').addEventListener('submit',async e=>{
   e.preventDefault();
-  for(const id of ['fName','fPhone','fAddr','fDate']){
-    if(!$(id).value.trim()){ $(id).focus(); $('msg').textContent='Bitte noch alle Felder ausfüllen 🙂'; return; }
-  }
-  if(c.p+c.b<1){ $('msg').textContent='Bitte mindestens ein Paket oder einen Brief wählen.'; return; }
+  if(step!==3){ if(valid(step)) goStep(step+1); return; }
+  if(!valid(3)) return;
   const data={
-    Name:$('fName').value, Telefon:$('fPhone').value, 'E-Mail':$('fMail').value||'–',
-    Adresse:$('fAddr').value+', Troisdorf', Wunschtermin:$('fDate').value,
-    Pakete:c.p, Briefe:c.b, Preis:eur(c.p*P+c.b*B)+' (bar)',
-    'Retouren-Code':$('fCode').value||'–', 'QR-Code/Etikett':$('fFile').files[0]?'im Anhang':'–'
+    Name:$('fName').value.trim(), Telefon:$('fPhone').value.trim(), 'E-Mail':$('fMail').value.trim()||'–',
+    Adresse:$('fAddr').value.trim()+', Troisdorf', Wunschtermin:`${when.day}, ${when.time}`,
+    Pakete:c.p, Briefe:c.b, Preis:price()+' (bar)',
+    'Retouren-Code':$('fCode').value.trim()||'–', 'QR-Code/Etikett':$('fFile').files[0]?'im Anhang':'–'
   };
-  const btn=e.submitter||$('bookForm').querySelector('[type=submit]');
+  const btn=$('send'), label=btn.innerHTML;
   const subject=`🚲 Neue Abholung: ${data.Name} – ${data.Wunschtermin}`;
+  const sig=()=>AbortSignal.timeout?AbortSignal.timeout(12000):undefined;
   btn.disabled=true; btn.textContent='Wird gesendet …'; $('msg').textContent='';
   try{
     let ok=false;
     if(WEB3FORMS_KEY){
-      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',signal:(AbortSignal.timeout?AbortSignal.timeout(12000):undefined),headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify({access_key:WEB3FORMS_KEY, subject, from_name:'Retourrex Website',
-          ...(($('fMail').value)?{email:$('fMail').value}:{}), ...data})});
+      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',signal:sig(),headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({access_key:WEB3FORMS_KEY, subject, from_name:'Retourrex Website', ...(data['E-Mail']!=='–'?{email:data['E-Mail']}:{}), ...data})});
       ok=(await r.json()).success===true;
     }else{
-      // Direktversand über FormSubmit: Bestellung geht sofort als E-Mail an Retourrex
       const fd=new FormData();
-      const fields={_subject:subject, _template:'table', _captcha:'false', ...(($('fMail').value)?{_replyto:$('fMail').value}:{}), ...data};
-      Object.entries(fields).forEach(([k,v])=>fd.append(k,v));
+      Object.entries({_subject:subject,_template:'table',_captcha:'false',...(data['E-Mail']!=='–'?{_replyto:data['E-Mail']}:{}),...data}).forEach(([k,v])=>fd.append(k,v));
       if($('fFile').files[0]) fd.append('attachment',$('fFile').files[0]);
-      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{Accept:'application/json'},body:fd,signal:(AbortSignal.timeout?AbortSignal.timeout(12000):undefined)});
-      const j=await r.json();
-      ok=j.success===true||j.success==='true';
+      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{Accept:'application/json'},body:fd,signal:sig()});
+      const j=await r.json(); ok=j.success===true||j.success==='true';
     }
     if(ok){ showDone(); return; }
     throw new Error('not sent');
   }catch(err){
-    $('msg').textContent='Senden hat nicht geklappt. Wir öffnen stattdessen Ihr E-Mail-Programm.';
-  }finally{ btn.disabled=false; btn.textContent='Anfrage senden ✉️'; }
-  if(data['QR-Code/Etikett']==='im Anhang') data['QR-Code/Etikett']='bitte an diese Mail anhängen';
-  const body='Hallo Retourrex,\n\nich möchte gern eine Abholung:\n\n'+Object.entries(data).map(([k,v])=>`${k}: ${v}`).join('\n')+'\n\nDanke!';
-  location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
-  showDone(true);
+    if(data['QR-Code/Etikett']==='im Anhang') data['QR-Code/Etikett']='bitte an diese Mail anhängen';
+    const body='Hallo Retourrex,\n\nich möchte gern eine Abholung:\n\n'+Object.entries(data).map(([k,v])=>`${k}: ${v}`).join('\n')+'\n\nDanke!';
+    location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
+    showDone(true);
+  }finally{ btn.disabled=false; btn.innerHTML=label; render(); }
 });
+
 // Fester Handy-Button nur zeigen, wenn Start-Button und Formular nicht sichtbar sind
 (()=>{
   const cta=document.querySelector('.mobile-cta'); if(!cta||!('IntersectionObserver' in window)) return;
@@ -381,7 +522,8 @@ function showFile(){
   if(f && f.size>MAX){ $('fFile').value=''; toast('Datei ist zu groß (max. 5 MB)'); }
   const g=$('fFile').files[0];
   $('fileClear').hidden=!g;
-  $('dropText').innerHTML = g ? `<b>✓ ${g.name.replace(/[<>&]/g,'')}</b><br><small>wird mitgeschickt</small>` : '<b>Foto oder Screenshot hochladen</b><br><small>QR-Code aus der Shop-Mail oder Foto vom Etikett, max. 5 MB</small>';
+  $('dropZone').classList.toggle('has',!!g);
+  $('dropText').innerHTML = g ? `<b>✓ QR-Code hinzugefügt</b><br><small>${esc(g.name)}</small>` : '<b>Screenshot oder Foto hochladen</b><br><small>aus der Shop-Mail oder vom Etikett</small>';
   const img=$('dropPrev');
   if(g && g.type.startsWith('image/')){ img.src=URL.createObjectURL(g); img.hidden=false; } else { img.hidden=true; img.removeAttribute('src'); }
 }
@@ -393,9 +535,12 @@ const dz=$('dropZone');
 dz.addEventListener('drop',e=>{ if(e.dataTransfer.files.length){ $('fFile').files=e.dataTransfer.files; showFile(); }});
 
 $('again').addEventListener('click',()=>{
-  $('bookForm').reset(); showFile(); c.p=1; c.b=0; pristine=true; render(); $('msg').textContent='';
-  $('done').hidden=true; $('bookForm').hidden=false; $('fName').focus();
+  $('bookForm').reset(); showFile(); c.p=1; c.b=0; pristine=true; when.day=''; when.time='';
+  document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-checked','false'));
+  ['fName','fAddr','fPhone','fMail'].forEach(id=>setErr(id,''));
+  render(); $('done').hidden=true; $('bookForm').hidden=false; goStep(1);
 });
+render();
 </script>
 </body>
 </html>
