@@ -218,6 +218,14 @@ details.code summary{display:block}
 form,.done{box-shadow:none!important;border:1px solid var(--line)}
 section+section{padding-top:24px}
 @media (max-width:640px){section+section{padding-top:8px}}
+/* Nichts darf seitlich herausragen */
+html,body{max-width:100%;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+.counters{grid-template-columns:repeat(2,minmax(0,1fr))}
+.counter{min-width:0}
+@media (max-width:640px){.counters{grid-template-columns:minmax(0,1fr)}}
+form,fieldset,.step-pane,.drop,details.code{min-width:0;max-width:100%}
+.drop{position:relative}
 /* FAQ */
 .faq{max-width:700px;margin:0 auto}
 details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
