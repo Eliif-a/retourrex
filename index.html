@@ -263,9 +263,10 @@ footer .small{font-size:14px;margin-top:14px}
 
 <script>
 /* ===== EINSTELLUNG =====
-   Kostenlosen Schlüssel holen auf https://web3forms.com (nur E-Mail eingeben, z. B. retourrex@outlook.de)
-   und hier zwischen die Anführungszeichen setzen. Dann kommt jede Anfrage sofort als E-Mail an.
-   Ohne Schlüssel öffnet sich ersatzweise das E-Mail-Programm des Kunden. */
+   Bestellungen gehen direkt per FormSubmit (formsubmit.co) als E-Mail an retourrex@outlook.de.
+   Einmalig nötig: Die erste Bestellung löst eine Aktivierungs-Mail an retourrex@outlook.de aus,
+   dort auf "Activate Form" klicken. Danach kommt jede Bestellung sofort an.
+   Optional statt FormSubmit: Web3Forms-Schlüssel hier eintragen. */
 const WEB3FORMS_KEY = '';
 const EMAIL='retourrex@outlook.de', P=6.5, B=4.5;
 
@@ -312,19 +313,28 @@ $('bookForm').addEventListener('submit',async e=>{
     Pakete:c.p, Briefe:c.b, Preis:eur(c.p*P+c.b*B)+' (bar)'
   };
   const btn=e.submitter||$('bookForm').querySelector('[type=submit]');
-  if(WEB3FORMS_KEY){
-    btn.disabled=true; btn.textContent='Wird gesendet …'; $('msg').textContent='';
-    try{
+  const subject=`🚲 Neue Abholung: ${data.Name} – ${data.Wunschtermin}`;
+  btn.disabled=true; btn.textContent='Wird gesendet …'; $('msg').textContent='';
+  try{
+    let ok=false;
+    if(WEB3FORMS_KEY){
       const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify({access_key:WEB3FORMS_KEY, subject:`🚲 Neue Abholung: ${data.Name} – ${data.Wunschtermin}`, from_name:'Retourrex Website',
+        body:JSON.stringify({access_key:WEB3FORMS_KEY, subject, from_name:'Retourrex Website',
           ...(($('fMail').value)?{email:$('fMail').value}:{}), ...data})});
+      ok=(await r.json()).success===true;
+    }else{
+      // Direktversand über FormSubmit: Bestellung geht sofort als E-Mail an Retourrex
+      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({_subject:subject, _template:'table', _captcha:'false',
+          ...(($('fMail').value)?{_replyto:$('fMail').value}:{}), ...data})});
       const j=await r.json();
-      if(!j.success) throw new Error(j.message);
-      showDone(); return;
-    }catch(err){
-      $('msg').textContent='Senden hat nicht geklappt. Wir öffnen stattdessen Ihr E-Mail-Programm.';
-    }finally{ btn.disabled=false; btn.textContent='Anfrage senden ✉️'; }
-  }
+      ok=j.success===true||j.success==='true';
+    }
+    if(ok){ showDone(); return; }
+    throw new Error('not sent');
+  }catch(err){
+    $('msg').textContent='Senden hat nicht geklappt. Wir öffnen stattdessen Ihr E-Mail-Programm.';
+  }finally{ btn.disabled=false; btn.textContent='Anfrage senden ✉️'; }
   const body='Hallo Retourrex,\n\nich möchte gern eine Abholung:\n\n'+Object.entries(data).map(([k,v])=>`${k}: ${v}`).join('\n')+'\n\nDanke!';
   location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
   showDone(true);
