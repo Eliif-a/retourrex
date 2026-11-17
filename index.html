@@ -74,7 +74,7 @@ header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px s
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
 
 /* Booking */
-.book{background:var(--green-soft)}
+.book{background:var(--bg)}
 form{max-width:620px;margin:0 auto;background:var(--card);border-radius:28px;padding:32px;box-shadow:0 20px 50px -30px rgba(0,0,0,.35);display:grid;gap:18px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:560px){.row{grid-template-columns:1fr}form{padding:22px}}
@@ -167,6 +167,57 @@ details.code input{margin-top:8px}
 input{font-size:17px}
 @media (max-width:560px){ form{padding:20px 16px} legend{font-size:20px} }
 
+
+/* ===== Icons + Handy-Feinschliff ===== */
+.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;display:inline-block;vertical-align:middle}
+.price .ico{display:grid;place-items:center;height:34px}
+.price .ico .i{width:30px;height:30px;color:var(--green)}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+.trust .i{width:20px;height:20px;color:var(--green)}
+.step .num .i{width:30px;height:30px;color:var(--green)}
+.counter span{display:flex;align-items:center;gap:8px}
+.counter span .i{color:var(--green)}
+.drop-ico .i{width:30px;height:30px;color:var(--green)}
+.done-ico .i{width:64px;height:64px;color:var(--green);stroke-width:1.8}
+details.code summary{display:block}
+@media (max-width:640px){
+  body{font-size:17px}
+  section{padding:48px 0}
+  h2{font-size:27px}
+  .sub{margin-bottom:24px;font-size:16px}
+  .hero{padding:8px 0 40px}
+  .logo-big{margin:10px auto 18px;gap:0}
+  .logo-big .mark{width:116px}
+  .word{font-size:42px}
+  .slogan-hero{font-size:16px}
+  .hero h1{font-size:30px;margin-bottom:10px}
+  .hero p{font-size:16.5px;margin-bottom:22px}
+  .prices{margin-bottom:18px}
+  .price{border-radius:16px}
+  .hero .btn{width:100%}
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:13px;margin-top:16px}
+  .trust span{flex-direction:column;gap:4px}
+  .steps{gap:10px}
+  .step{display:grid;grid-template-columns:52px 1fr;column-gap:14px;align-items:center;text-align:left;padding:16px;border-radius:18px}
+  .step .num{width:52px;height:52px;margin:0;grid-row:span 2}
+  .step .num .i{width:26px;height:26px}
+  .step h3{font-size:18px;margin:0}
+  .step p{font-size:15px;line-height:1.45}
+  .book .wrap{padding:0 12px}
+  form{padding:18px 14px;border-radius:22px;box-shadow:0 10px 30px -20px rgba(0,0,0,.3)}
+  .done{padding:28px 18px;border-radius:22px}
+  legend{font-size:20px;margin-bottom:10px}
+  .progress{margin-bottom:16px}
+  .progress li{font-size:14px;padding:6px 2px}
+  details{padding:14px 16px}
+  summary{font-size:16.5px}
+  footer{padding-top:40px}
+}
+
+/* Einheitlicher, ruhiger Hintergrund */
+form,.done{box-shadow:none!important;border:1px solid var(--line)}
+section+section{padding-top:24px}
+@media (max-width:640px){section+section{padding-top:8px}}
 /* FAQ */
 .faq{max-width:700px;margin:0 auto}
 details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
@@ -221,7 +272,14 @@ footer .small{font-size:14px;margin-top:14px}
   <!-- Brief vorne -->
   <rect x="148" y="40" width="58" height="40" rx="5" fill="#3c9a2e"/>
   <path d="M152 46l25 18 25-18" stroke="#ffffff" stroke-width="4.5"/>
-</symbol></svg>
+</symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9M7.5 5.2l9 4.6"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+<symbol id="i-bike" viewBox="0 0 24 24"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5 9 9h6l3.5 7.5M9 9 12 16.5 15 9M8 6h3"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+<symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v.01M18 14.5v.01"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4h-8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="m17.5 3.5 3 3L12 15H9v-3z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9.5"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.6-2.5h6.8L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></symbol></svg>
 
 <header>
   <div class="wrap nav">
@@ -237,11 +295,11 @@ footer .small{font-size:14px;margin-top:14px}
       <h1>Wir bringen Ihre Retoure <span>zur Post.</span></h1>
       <p>Sie bleiben gemütlich zu Hause. Wir holen Ihre Pakete und Briefe mit dem Fahrrad ab, hier in Troisdorf.</p>
       <div class="prices">
-        <button type="button" class="price" data-add="p"><div class="ico">📦</div><b>6,50 €</b><small>pro Paket</small><span class="add">+ Paket hinzufügen</span></button>
-        <button type="button" class="price" data-add="b"><div class="ico">✉️</div><b>4,50 €</b><small>pro Brief</small><span class="add">+ Brief hinzufügen</span></button>
+        <button type="button" class="price" data-add="p"><div class="ico"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></div><b>6,50 €</b><small>pro Paket</small><span class="add">+ Paket hinzufügen</span></button>
+        <button type="button" class="price" data-add="b"><div class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></div><b>4,50 €</b><small>pro Brief</small><span class="add">+ Brief hinzufügen</span></button>
       </div>
       <a class="btn" href="#buchen" id="heroCta">Jetzt Abholung anfragen</a>
-      <div class="trust"><span>🚲 Per Fahrrad</span><span>📍 Ganz Troisdorf</span><span>💶 Bar bezahlen</span></div>
+      <div class="trust"><span><svg class="i" aria-hidden="true"><use href="#i-bike"/></svg>Per Fahrrad</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Ganz Troisdorf</span><span><svg class="i" aria-hidden="true"><use href="#i-cash"/></svg>Bar bezahlen</span></div>
     </div>
   </section>
 
@@ -250,9 +308,9 @@ footer .small{font-size:14px;margin-top:14px}
       <h2>So einfach geht's</h2>
       <p class="sub">Drei Schritte, null Stress.</p>
       <div class="steps">
-        <div class="step"><div class="num">📝</div><h3>Anfragen</h3><p>Kurz das Formular ausfüllen und den Retouren-QR-Code mitschicken.</p></div>
-        <div class="step"><div class="num">🚲</div><h3>Wir klingeln</h3><p>Wir holen Ihre Sendung zum Wunschtermin ab. Sie zahlen bar.</p></div>
-        <div class="step"><div class="num">✅</div><h3>Erledigt</h3><p>Wir geben die Sendung ab und schicken Ihnen den Beleg per E-Mail.</p></div>
+        <div class="step"><div class="num"><svg class="i" aria-hidden="true"><use href="#i-edit"/></svg></div><h3>Anfragen</h3><p>Kurz das Formular ausfüllen und den Retouren-QR-Code mitschicken.</p></div>
+        <div class="step"><div class="num"><svg class="i" aria-hidden="true"><use href="#i-bike"/></svg></div><h3>Wir klingeln</h3><p>Wir holen Ihre Sendung zum Wunschtermin ab. Sie zahlen bar.</p></div>
+        <div class="step"><div class="num"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></div><h3>Erledigt</h3><p>Wir geben die Sendung ab und schicken Ihnen den Beleg per E-Mail.</p></div>
       </div>
     </div>
   </section>
@@ -272,15 +330,15 @@ footer .small{font-size:14px;margin-top:14px}
         <fieldset class="step-pane" data-step="1">
           <legend>Was dürfen wir abholen?</legend>
           <div class="counters">
-            <div class="counter"><span>📦 Pakete</span><div class="ctl"><button type="button" data-t="p" data-d="-1" aria-label="Ein Paket weniger">–</button><output id="cP">1</output><button type="button" data-t="p" data-d="1" aria-label="Ein Paket mehr">+</button></div></div>
-            <div class="counter"><span>✉️ Briefe</span><div class="ctl"><button type="button" data-t="b" data-d="-1" aria-label="Ein Brief weniger">–</button><output id="cB">0</output><button type="button" data-t="b" data-d="1" aria-label="Ein Brief mehr">+</button></div></div>
+            <div class="counter"><span><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Pakete</span><div class="ctl"><button type="button" data-t="p" data-d="-1" aria-label="Ein Paket weniger">–</button><output id="cP">1</output><button type="button" data-t="p" data-d="1" aria-label="Ein Paket mehr">+</button></div></div>
+            <div class="counter"><span><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Briefe</span><div class="ctl"><button type="button" data-t="b" data-d="-1" aria-label="Ein Brief weniger">–</button><output id="cB">0</output><button type="button" data-t="b" data-d="1" aria-label="Ein Brief mehr">+</button></div></div>
           </div>
           <p class="err" id="eCount"></p>
 
-          <p class="q">Haben Sie einen Retouren-QR-Code? <small>(optional)</small></p>
+          <p class="q">Retouren-QR-Code <small>(optional)</small></p>
           <label class="drop" for="fFile" id="dropZone">
             <input id="fFile" type="file" accept="image/*,application/pdf">
-            <span class="drop-ico">📷</span>
+            <span class="drop-ico"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg></span>
             <span id="dropText"><b>Screenshot oder Foto hochladen</b><br><small>aus der Shop-Mail oder vom Etikett</small></span>
             <img id="dropPrev" alt="" hidden>
           </label>
@@ -299,9 +357,9 @@ footer .small{font-size:14px;margin-top:14px}
           <div class="chips" id="days" role="radiogroup" aria-label="Tag"></div>
           <p class="q">Uhrzeit</p>
           <div class="chips" id="times" role="radiogroup" aria-label="Uhrzeit">
-            <button type="button" class="chip" role="radio" aria-checked="false" data-v="vormittags (8–12 Uhr)">☀️ 8–12 Uhr</button>
-            <button type="button" class="chip" role="radio" aria-checked="false" data-v="mittags (12–16 Uhr)">🌤️ 12–16 Uhr</button>
-            <button type="button" class="chip" role="radio" aria-checked="false" data-v="abends (16–20 Uhr)">🌙 16–20 Uhr</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="vormittags (8–12 Uhr)">8–12 Uhr</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="mittags (12–16 Uhr)">12–16 Uhr</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-v="abends (16–20 Uhr)">16–20 Uhr</button>
           </div>
           <p class="err" id="eWhen"></p>
         </fieldset>
@@ -324,7 +382,7 @@ footer .small{font-size:14px;margin-top:14px}
         <p id="msg" role="status"></p>
       </form>
       <div class="done" id="done" hidden tabindex="-1">
-        <div class="done-ico">🎉</div>
+        <div class="done-ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></div>
         <h3>Danke, <span id="dName"></span>!</h3>
         <p id="dText">Ihre Anfrage ist bei Retourrex angekommen. Wir melden uns in Kürze unter <b id="dPhone"></b>, um den Termin zu bestätigen.</p>
         <div class="summary" id="dSum"></div>
@@ -357,7 +415,7 @@ footer .small{font-size:14px;margin-top:14px}
   </div>
 </footer>
 
-<a class="btn mobile-cta" href="#buchen">📦 Abholung anfragen</a>
+<a class="btn mobile-cta" href="#buchen">Abholung anfragen</a>
 
 <script>
 /* ===== EINSTELLUNG =====
@@ -392,7 +450,7 @@ document.querySelectorAll('[data-add]').forEach(card=>card.addEventListener('cli
   const t=card.dataset.add;
   if(pristine){ c.p=0; c.b=0; pristine=false; }
   c[t]=Math.min(30,c[t]+1); render(); goStep(1,false);
-  toast(t==='p' ? `📦 Paket hinzugefügt (${c.p})` : `✉️ Brief hinzugefügt (${c.b})`);
+  toast(t==='p' ? `Paket hinzugefügt (${c.p})` : `Brief hinzugefügt (${c.b})`);
   $('buchen').scrollIntoView({behavior:'smooth'});
 }));
 
@@ -437,10 +495,10 @@ function valid(s){
   return ok;
 }
 function summary(){
-  const lines=[`📦 ${c.p} Paket${c.p===1?'':'e'} · ✉️ ${c.b} Brief${c.b===1?'':'e'}`, `🕒 ${when.day}, ${when.time}`];
-  if($('fAddr').value.trim()) lines.push(`📍 ${$('fAddr').value.trim()}, Troisdorf`);
-  if($('fFile').files[0]) lines.push('🔳 QR-Code wird mitgeschickt'); else if($('fCode').value.trim()) lines.push(`🔳 Code: ${$('fCode').value.trim()}`);
-  lines.push(`💶 ${price()} bar bei Abholung`);
+  const lines=[`Was: ${c.p} Paket${c.p===1?'':'e'}${c.b?`, ${c.b} Brief${c.b===1?'':'e'}`:''}`, `Wann: ${when.day}, ${when.time}`];
+  if($('fAddr').value.trim()) lines.push(`Wo: ${$('fAddr').value.trim()}, Troisdorf`);
+  if($('fFile').files[0]) lines.push('QR-Code: wird mitgeschickt'); else if($('fCode').value.trim()) lines.push(`Code: ${$('fCode').value.trim()}`);
+  lines.push(`Preis: ${price()} bar bei Abholung`);
   return lines.join('\n');
 }
 function goStep(s,scroll=true){
