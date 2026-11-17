@@ -112,6 +112,14 @@ form .btn{width:100%}
 @media (max-width:640px){.toast{bottom:90px}}
 
 [hidden]{display:none!important}
+.drop{display:flex;align-items:center;gap:14px;border:2px dashed var(--line);border-radius:16px;padding:16px;cursor:pointer;margin:0;font-weight:600;transition:border-color .15s,background .15s}
+.drop:hover,.drop.over{border-color:var(--green);background:var(--green-soft)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.drop:focus-within{border-color:var(--green)}
+.drop-ico{font-size:30px;flex:none}
+.drop small{color:var(--muted);font-weight:600}
+.drop img{width:64px;height:64px;object-fit:cover;border-radius:10px;margin-left:auto;flex:none}
+.link{background:none;border:0;color:var(--green-dark);font:inherit;font-size:15px;font-weight:800;cursor:pointer;padding:6px 0;text-decoration:underline}
 /* FAQ */
 .faq{max-width:700px;margin:0 auto}
 details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
@@ -220,9 +228,21 @@ footer .small{font-size:14px;margin-top:14px}
             <div class="counter"><span>✉️ Briefe</span><div class="ctl"><button type="button" data-t="b" data-d="-1" aria-label="Ein Brief weniger">–</button><output id="cB">0</output><button type="button" data-t="b" data-d="1" aria-label="Ein Brief mehr">+</button></div></div>
           </div>
         </div>
+        <div class="ret">
+          <label>Retouren-QR-Code oder Etikett <small style="font-weight:600;color:var(--muted)">(optional)</small></label>
+          <label class="drop" for="fFile" id="dropZone">
+            <input id="fFile" type="file" accept="image/*,application/pdf">
+            <span class="drop-ico">📷</span>
+            <span id="dropText"><b>Foto oder Screenshot hochladen</b><br><small>QR-Code aus der Shop-Mail oder Foto vom Etikett, max. 5 MB</small></span>
+            <img id="dropPrev" alt="" hidden>
+          </label>
+          <button type="button" class="link" id="fileClear" hidden>Datei entfernen</button>
+          <label for="fCode" style="margin-top:12px">Oder Retouren-Code / Sendungsnummer</label>
+          <input id="fCode" placeholder="z. B. 1Z999AA10123456784 oder Rücksende-Code">
+        </div>
         <div class="total"><span>Ihr Preis</span><b id="total">6,50 €</b></div>
         <button class="btn" type="submit">Anfrage senden ✉️</button>
-        <p class="tip">Ein Klick genügt: Retourrex wird sofort benachrichtigt und meldet sich bei Ihnen. Den Retourenschein oder QR-Code halten Sie einfach bei der Abholung bereit.</p>
+        <p class="tip">Ein Klick genügt: Retourrex wird sofort benachrichtigt und meldet sich bei Ihnen. Kein Upload? Kein Problem, dann halten Sie den Retourenschein bei der Abholung einfach bereit.</p>
         <p id="msg" role="status"></p>
       </form>
       <div class="done" id="done" hidden tabindex="-1">
@@ -242,7 +262,7 @@ footer .small{font-size:14px;margin-top:14px}
       <p class="sub">Die häufigsten Fragen kurz beantwortet.</p>
       <div class="faq">
         <details><summary>Was kostet das Porto?</summary><p>Bei kostenlosen Retouren zahlen Sie nur unseren Abholpreis. Bei frankierten Sendungen kommt das Porto dazu.</p></details>
-        <details><summary>Ich habe keinen Drucker. Geht das trotzdem?</summary><p>Ja! Schicken Sie uns einfach den QR-Code per E-Mail. Das Etikett wird dann bei der Annahmestelle gedruckt.</p></details>
+        <details><summary>Ich habe keinen Drucker. Geht das trotzdem?</summary><p>Ja! Laden Sie den QR-Code einfach im Anfrageformular hoch, als Screenshot aus der Shop-Mail. Das Etikett wird dann bei der Annahmestelle gedruckt.</p></details>
         <details><summary>Wie bezahle ich?</summary><p>Bar bei der Abholung. Am besten den Betrag passend bereithalten.</p></details>
         <details><summary>Wo holen Sie ab?</summary><p>In ganz Troisdorf: Mitte, Oberlar, Sieglar, Spich, Altenrath, Bergheim, Eschmar, Kriegsdorf, Müllekoven und allen anderen Stadtteilen.</p></details>
       </div>
@@ -310,7 +330,8 @@ $('bookForm').addEventListener('submit',async e=>{
   const data={
     Name:$('fName').value, Telefon:$('fPhone').value, 'E-Mail':$('fMail').value||'–',
     Adresse:$('fAddr').value+', Troisdorf', Wunschtermin:$('fDate').value,
-    Pakete:c.p, Briefe:c.b, Preis:eur(c.p*P+c.b*B)+' (bar)'
+    Pakete:c.p, Briefe:c.b, Preis:eur(c.p*P+c.b*B)+' (bar)',
+    'Retouren-Code':$('fCode').value||'–', 'QR-Code/Etikett':$('fFile').files[0]?'im Anhang':'–'
   };
   const btn=e.submitter||$('bookForm').querySelector('[type=submit]');
   const subject=`🚲 Neue Abholung: ${data.Name} – ${data.Wunschtermin}`;
@@ -324,9 +345,11 @@ $('bookForm').addEventListener('submit',async e=>{
       ok=(await r.json()).success===true;
     }else{
       // Direktversand über FormSubmit: Bestellung geht sofort als E-Mail an Retourrex
-      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify({_subject:subject, _template:'table', _captcha:'false',
-          ...(($('fMail').value)?{_replyto:$('fMail').value}:{}), ...data})});
+      const fd=new FormData();
+      const fields={_subject:subject, _template:'table', _captcha:'false', ...(($('fMail').value)?{_replyto:$('fMail').value}:{}), ...data};
+      Object.entries(fields).forEach(([k,v])=>fd.append(k,v));
+      if($('fFile').files[0]) fd.append('attachment',$('fFile').files[0]);
+      const r=await fetch(`https://formsubmit.co/ajax/${EMAIL}`,{method:'POST',headers:{Accept:'application/json'},body:fd});
       const j=await r.json();
       ok=j.success===true||j.success==='true';
     }
@@ -335,12 +358,31 @@ $('bookForm').addEventListener('submit',async e=>{
   }catch(err){
     $('msg').textContent='Senden hat nicht geklappt. Wir öffnen stattdessen Ihr E-Mail-Programm.';
   }finally{ btn.disabled=false; btn.textContent='Anfrage senden ✉️'; }
+  if(data['QR-Code/Etikett']==='im Anhang') data['QR-Code/Etikett']='bitte an diese Mail anhängen';
   const body='Hallo Retourrex,\n\nich möchte gern eine Abholung:\n\n'+Object.entries(data).map(([k,v])=>`${k}: ${v}`).join('\n')+'\n\nDanke!';
   location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
   showDone(true);
 });
+// Upload: Vorschau, Größe prüfen, Drag & Drop
+const MAX=5*1024*1024;
+function showFile(){
+  const f=$('fFile').files[0];
+  if(f && f.size>MAX){ $('fFile').value=''; toast('Datei ist zu groß (max. 5 MB)'); }
+  const g=$('fFile').files[0];
+  $('fileClear').hidden=!g;
+  $('dropText').innerHTML = g ? `<b>✓ ${g.name.replace(/[<>&]/g,'')}</b><br><small>wird mitgeschickt</small>` : '<b>Foto oder Screenshot hochladen</b><br><small>QR-Code aus der Shop-Mail oder Foto vom Etikett, max. 5 MB</small>';
+  const img=$('dropPrev');
+  if(g && g.type.startsWith('image/')){ img.src=URL.createObjectURL(g); img.hidden=false; } else { img.hidden=true; img.removeAttribute('src'); }
+}
+$('fFile').addEventListener('change',showFile);
+$('fileClear').addEventListener('click',()=>{ $('fFile').value=''; showFile(); });
+const dz=$('dropZone');
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault(); dz.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault(); dz.classList.remove('over');}));
+dz.addEventListener('drop',e=>{ if(e.dataTransfer.files.length){ $('fFile').files=e.dataTransfer.files; showFile(); }});
+
 $('again').addEventListener('click',()=>{
-  $('bookForm').reset(); c.p=1; c.b=0; pristine=true; render(); $('msg').textContent='';
+  $('bookForm').reset(); showFile(); c.p=1; c.b=0; pristine=true; render(); $('msg').textContent='';
   $('done').hidden=true; $('bookForm').hidden=false; $('fName').focus();
 });
 </script>
