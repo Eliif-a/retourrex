@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retourrex – Retouren-Abholung Troisdorf</title>
+<meta name="description" content="Retourrex holt Ihre Retouren, Pakete und Briefe direkt bei Ihnen zu Hause in Troisdorf ab – per Fahrrad. Paket 6,50 €, Brief 4,50 €.">
+<link rel="icon" href="logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#3c9a2e; --green-dark:#2b7520; --green-soft:#eaf6e6; --glow:#5fd146;
+  --ink:#1a201b; --muted:#5f685f; --bg:#fbfdf9; --card:#ffffff; --line:#e3ebdf;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --green:#5cc348; --green-dark:#86dd72; --green-soft:#17281a; --ink:#eef4ec; --muted:#a9b3a9;
+    --bg:#0d130e; --card:#141c15; --line:#253227;
+  }
+}
+:root[data-theme="dark"]{
+  --green:#5cc348; --green-dark:#86dd72; --green-soft:#17281a; --ink:#eef4ec; --muted:#a9b3a9;
+  --bg:#0d130e; --card:#141c15; --line:#253227;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:18px}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.15}
+h2{font-size:clamp(28px,4.5vw,40px);font-weight:900;text-align:center;margin-bottom:8px}
+.sub{text-align:center;color:var(--muted);margin:0 auto 40px;max-width:560px}
+section{padding:72px 0}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--green);color:#fff;font:inherit;font-weight:800;font-size:19px;text-decoration:none;border:0;border-radius:999px;padding:16px 32px;cursor:pointer;box-shadow:0 10px 24px -10px var(--green);transition:transform .15s,background .15s}
+.btn:hover{background:var(--green-dark);transform:translateY(-2px)}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:24px}
+.mark{color:var(--ink);display:block}
+.brand .mark{width:62px;height:42px}
+.brand span span{color:var(--green)}
+.nav .btn{padding:10px 20px;font-size:16px;box-shadow:none}
+
+/* Hero */
+.hero{text-align:center;padding:24px 0 72px;background:radial-gradient(700px 420px at 50% 30%,var(--green-soft),transparent 70%)}
+.logo-big{display:flex;align-items:center;justify-content:center;gap:18px;margin:16px auto 36px;text-align:left;flex-wrap:wrap}
+.logo-big .mark{width:clamp(150px,26vw,220px);height:auto;aspect-ratio:220/150;animation:ride 3s ease-in-out infinite}
+@keyframes ride{50%{transform:translateX(6px)}}
+@media (prefers-reduced-motion: reduce){.logo-big .mark{animation:none}}
+.word{font-weight:900;font-style:italic;font-size:clamp(46px,8vw,76px);letter-spacing:-.03em;line-height:1}
+.word span{color:var(--green)}
+.slogan-hero{font-weight:800;font-size:clamp(18px,2.6vw,24px);margin-top:4px}
+@media (max-width:520px){.logo-big{flex-direction:column;text-align:center;gap:6px}}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:900;margin-bottom:14px}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:clamp(18px,2.4vw,21px);color:var(--muted);max-width:580px;margin:0 auto 30px}
+.prices{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+.price{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 26px;min-width:150px}
+.price .ico{font-size:28px}
+.price b{display:block;font-size:30px;font-weight:900;color:var(--green)}
+.price small{color:var(--muted);font-weight:700}
+.trust{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-weight:700;font-size:16px}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px 24px;text-align:center}
+.step .num{width:64px;height:64px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;font-size:30px;margin:0 auto 16px}
+.step h3{font-size:21px;font-weight:900;margin-bottom:6px}
+.step p{color:var(--muted);font-size:16.5px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+
+/* Booking */
+.book{background:var(--green-soft)}
+form{max-width:620px;margin:0 auto;background:var(--card);border-radius:28px;padding:32px;box-shadow:0 20px 50px -30px rgba(0,0,0,.35);display:grid;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr}form{padding:22px}}
+label{display:block;font-weight:800;font-size:16px;margin-bottom:6px}
+input,textarea{font:inherit;font-size:17px;padding:13px 16px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+input:focus,textarea:focus{outline:none;border-color:var(--green)}
+.counters{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.counter{border:2px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.counter span{font-weight:800}
+.counter .ctl{display:flex;align-items:center;gap:10px}
+.counter button{width:38px;height:38px;border-radius:50%;border:0;background:var(--green-soft);color:var(--green-dark);font-size:22px;font-weight:900;cursor:pointer}
+.counter button:hover{background:var(--green);color:#fff}
+.counter output{min-width:20px;text-align:center;font-weight:900;font-size:20px}
+@media (max-width:420px){.counters{grid-template-columns:1fr}}
+.total{display:flex;justify-content:space-between;align-items:center;background:var(--green-soft);border-radius:16px;padding:14px 18px;font-weight:800}
+.total b{font-size:28px;color:var(--green-dark)}
+.tip{font-size:15px;color:var(--muted);text-align:center}
+form .btn{width:100%}
+#msg{text-align:center;font-weight:700;color:var(--green-dark);min-height:1.2em;font-size:16px}
+
+.price{font:inherit;color:inherit;cursor:pointer;transition:transform .15s,border-color .15s}
+.price:hover{transform:translateY(-3px);border-color:var(--green)}
+.price .add{display:block;margin-top:6px;font-size:14px;font-weight:800;color:var(--green-dark)}
+.btn.ghost{background:transparent;color:var(--green-dark);border:2px solid var(--green);box-shadow:none}
+.btn.ghost:hover{background:var(--green-soft)}
+.btn[disabled]{opacity:.7;cursor:wait;transform:none}
+.done{max-width:620px;margin:0 auto;background:var(--card);border-radius:28px;padding:40px 32px;text-align:center;box-shadow:0 20px 50px -30px rgba(0,0,0,.35)}
+.done-ico{font-size:56px;animation:pop .5s ease-out}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.done h3{font-size:28px;font-weight:900;margin:8px 0}
+.done p{color:var(--muted)}
+.summary{background:var(--green-soft);border-radius:16px;padding:14px 18px;margin:20px 0;font-weight:700;text-align:left;white-space:pre-line}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:14px 22px;border-radius:999px;font-weight:800;z-index:50;transition:transform .3s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translate(-50%,0)}
+@media (max-width:640px){.toast{bottom:90px}}
+
+[hidden]{display:none!important}
+/* FAQ */
+.faq{max-width:700px;margin:0 auto}
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
+summary{font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--green);font-size:24px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:8px}
+
+/* Footer */
+footer{text-align:center;padding:56px 0 40px;border-top:1px solid var(--line)}
+.logo-foot{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px}
+.logo-foot .mark{width:72px;height:49px}
+.logo-foot .word{font-size:32px}
+footer .slogan{font-weight:900;font-size:22px;margin-bottom:6px}
+footer p{color:var(--muted);font-size:16px}
+footer .small{font-size:14px;margin-top:14px}
+.mobile-cta{display:none}
+@media (max-width:640px){
+  .nav .btn{display:none}
+  .mobile-cta{display:flex;position:fixed;left:14px;right:14px;bottom:14px;z-index:30}
+  footer{padding-bottom:100px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mark" viewBox="0 0 220 150" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Speed-Linien -->
+  <g stroke="#3c9a2e" stroke-width="7">
+    <path d="M8 62h30M16 78h22M4 94h34M14 110h22"/>
+  </g>
+  <!-- Paket hinten -->
+  <rect x="44" y="34" width="56" height="40" rx="4" fill="#3c9a2e"/>
+  <path d="M44 34l8-10h56l-8 10z" fill="#5cbf48"/>
+  <path d="M100 34l8-10v40l-8 10z" fill="#2b7520"/>
+  <path d="M66 24v18h12V24" stroke="#ffffff" stroke-width="2.5" fill="none" opacity=".85"/>
+  <!-- Räder -->
+  <g stroke="currentColor" stroke-width="8">
+    <circle cx="68" cy="112" r="28"/>
+    <circle cx="170" cy="112" r="28"/>
+    <!-- Rahmen -->
+    <path d="M68 112l28-34h46l28 34M96 78l20 34 26-34M110 70l6 8M142 78l-6-16h12"/>
+  </g>
+  <!-- Fahrer -->
+  <circle cx="128" cy="16" r="12" fill="currentColor"/>
+  <g stroke="currentColor" stroke-width="11">
+    <path d="M122 32l-14 36"/>
+    <path d="M120 38l20 22 8-2"/>
+    <path d="M108 70l26 16-14 26"/>
+  </g>
+  <!-- Brief vorne -->
+  <rect x="148" y="40" width="58" height="40" rx="5" fill="#3c9a2e"/>
+  <path d="M152 46l25 18 25-18" stroke="#ffffff" stroke-width="4.5"/>
+</symbol></svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Retour<span>rex</span></span></a>
+    <a class="btn" href="#buchen">Abholung anfragen</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="logo-big" role="img" aria-label="Retourrex – Ihre Zeit ist uns kostbar"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><div><div class="word">Retour<span>rex</span></div><div class="slogan-hero">Ihre Zeit ist uns kostbar</div></div></div>
+      <h1>Wir bringen Ihre Retoure <span>zur Post.</span></h1>
+      <p>Sie bleiben gemütlich zu Hause. Wir holen Ihre Pakete und Briefe mit dem Fahrrad ab, hier in Troisdorf.</p>
+      <div class="prices">
+        <button type="button" class="price" data-add="p"><div class="ico">📦</div><b>6,50 €</b><small>pro Paket</small><span class="add">+ Paket hinzufügen</span></button>
+        <button type="button" class="price" data-add="b"><div class="ico">✉️</div><b>4,50 €</b><small>pro Brief</small><span class="add">+ Brief hinzufügen</span></button>
+      </div>
+      <a class="btn" href="#buchen">Jetzt Abholung anfragen</a>
+      <div class="trust"><span>🚲 Per Fahrrad</span><span>📍 Ganz Troisdorf</span><span>💶 Bar bezahlen</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>So einfach geht's</h2>
+      <p class="sub">Drei Schritte, null Stress.</p>
+      <div class="steps">
+        <div class="step"><div class="num">📝</div><h3>Anfragen</h3><p>Kurz das Formular ausfüllen und den Retouren-QR-Code mitschicken.</p></div>
+        <div class="step"><div class="num">🚲</div><h3>Wir klingeln</h3><p>Wir holen Ihre Sendung zum Wunschtermin ab. Sie zahlen bar.</p></div>
+        <div class="step"><div class="num">✅</div><h3>Erledigt</h3><p>Wir geben die Sendung ab und schicken Ihnen den Beleg per E-Mail.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="buchen">
+    <div class="wrap">
+      <h2>Abholung anfragen</h2>
+      <p class="sub">Dauert keine Minute. Wir melden uns mit einer Bestätigung.</p>
+      <form id="bookForm" novalidate>
+        <div class="row">
+          <div><label for="fName">Ihr Name</label><input id="fName" autocomplete="name" required></div>
+          <div><label for="fPhone">Telefon</label><input id="fPhone" type="tel" autocomplete="tel" required></div>
+        </div>
+        <div><label for="fMail">E-Mail <small style="font-weight:600;color:var(--muted)">(für Ihre Bestätigung, optional)</small></label><input id="fMail" type="email" autocomplete="email" placeholder="name@beispiel.de"></div>
+        <div><label for="fAddr">Adresse in Troisdorf</label><input id="fAddr" autocomplete="street-address" placeholder="Straße, Hausnummer" required></div>
+        <div><label for="fDate">Wann passt es Ihnen?</label><input id="fDate" placeholder="z. B. Freitag nachmittags" required></div>
+        <div>
+          <label>Was dürfen wir abholen?</label>
+          <div class="counters">
+            <div class="counter"><span>📦 Pakete</span><div class="ctl"><button type="button" data-t="p" data-d="-1" aria-label="Ein Paket weniger">–</button><output id="cP">1</output><button type="button" data-t="p" data-d="1" aria-label="Ein Paket mehr">+</button></div></div>
+            <div class="counter"><span>✉️ Briefe</span><div class="ctl"><button type="button" data-t="b" data-d="-1" aria-label="Ein Brief weniger">–</button><output id="cB">0</output><button type="button" data-t="b" data-d="1" aria-label="Ein Brief mehr">+</button></div></div>
+          </div>
+        </div>
+        <div class="total"><span>Ihr Preis</span><b id="total">6,50 €</b></div>
+        <button class="btn" type="submit">Anfrage senden ✉️</button>
+        <p class="tip">Ein Klick genügt: Retourrex wird sofort benachrichtigt und meldet sich bei Ihnen. Den Retourenschein oder QR-Code halten Sie einfach bei der Abholung bereit.</p>
+        <p id="msg" role="status"></p>
+      </form>
+      <div class="done" id="done" hidden tabindex="-1">
+        <div class="done-ico">🎉</div>
+        <h3>Danke, <span id="dName"></span>!</h3>
+        <p id="dText">Ihre Anfrage ist bei Retourrex angekommen. Wir melden uns in Kürze unter <b id="dPhone"></b>, um den Termin zu bestätigen.</p>
+        <div class="summary" id="dSum"></div>
+        <button type="button" class="btn ghost" id="again">Noch eine Abholung anfragen</button>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Gut zu wissen</h2>
+      <p class="sub">Die häufigsten Fragen kurz beantwortet.</p>
+      <div class="faq">
+        <details><summary>Was kostet das Porto?</summary><p>Bei kostenlosen Retouren zahlen Sie nur unseren Abholpreis. Bei frankierten Sendungen kommt das Porto dazu.</p></details>
+        <details><summary>Ich habe keinen Drucker. Geht das trotzdem?</summary><p>Ja! Schicken Sie uns einfach den QR-Code per E-Mail. Das Etikett wird dann bei der Annahmestelle gedruckt.</p></details>
+        <details><summary>Wie bezahle ich?</summary><p>Bar bei der Abholung. Am besten den Betrag passend bereithalten.</p></details>
+        <details><summary>Wo holen Sie ab?</summary><p>In ganz Troisdorf: Mitte, Oberlar, Sieglar, Spich, Altenrath, Bergheim, Eschmar, Kriegsdorf, Müllekoven und allen anderen Stadtteilen.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo-foot"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span class="word">Retour<span>rex</span></span></div>
+    <div class="slogan">Ihre Zeit ist uns kostbar.</div>
+    <p>Retourrex · Troisdorf · <a href="mailto:retourrex@outlook.de">retourrex@outlook.de</a></p>
+    <p class="small"><a href="#" onclick="return false">Impressum</a> · <a href="#" onclick="return false">Datenschutz</a></p>
+  </div>
+</footer>
+
+<a class="btn mobile-cta" href="#buchen">📦 Abholung anfragen</a>
+
+<script>
+/* ===== EINSTELLUNG =====
+   Kostenlosen Schlüssel holen auf https://web3forms.com (nur E-Mail eingeben, z. B. retourrex@outlook.de)
+   und hier zwischen die Anführungszeichen setzen. Dann kommt jede Anfrage sofort als E-Mail an.
+   Ohne Schlüssel öffnet sich ersatzweise das E-Mail-Programm des Kunden. */
+const WEB3FORMS_KEY = '';
+const EMAIL='retourrex@outlook.de', P=6.5, B=4.5;
+
+const $=id=>document.getElementById(id);
+const eur=n=>n.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+const c={p:1,b:0};
+let pristine=true;
+function render(){ $('cP').textContent=c.p; $('cB').textContent=c.b; $('total').textContent=eur(c.p*P+c.b*B); }
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),2200); }
+
+document.querySelectorAll('.counter button').forEach(btn=>btn.addEventListener('click',()=>{
+  pristine=false; const t=btn.dataset.t; c[t]=Math.max(0,Math.min(30,c[t]+ +btn.dataset.d)); render();
+}));
+// Preis-Karten anklickbar: fügen etwas hinzu und springen zum Formular
+document.querySelectorAll('[data-add]').forEach(card=>card.addEventListener('click',()=>{
+  const t=card.dataset.add;
+  if(pristine){ c.p=0; c.b=0; pristine=false; }
+  c[t]=Math.min(30,c[t]+1); render();
+  toast(t==='p' ? `📦 Paket hinzugefügt (${c.p})` : `✉️ Brief hinzugefügt (${c.b})`);
+  $('buchen').scrollIntoView({behavior:'smooth'});
+}));
+
+function summary(){
+  return `📍 ${$('fAddr').value}, Troisdorf\n🕒 ${$('fDate').value}\n📦 ${c.p} Paket(e) · ✉️ ${c.b} Brief(e)\n💶 ${eur(c.p*P+c.b*B)} (bar bei Abholung)`;
+}
+function showDone(viaMail){
+  if(viaMail) $('dText').innerHTML='Bitte senden Sie jetzt noch die E-Mail ab, die sich geöffnet hat. Danach melden wir uns unter <b id="dPhone"></b>.';
+  $('dName').textContent=$('fName').value.split(' ')[0];
+  $('dPhone').textContent=$('fPhone').value;
+  $('dSum').textContent=summary();
+  $('bookForm').hidden=true; $('done').hidden=false; $('done').focus();
+  $('buchen').scrollIntoView({behavior:'smooth'});
+}
+
+$('bookForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  for(const id of ['fName','fPhone','fAddr','fDate']){
+    if(!$(id).value.trim()){ $(id).focus(); $('msg').textContent='Bitte noch alle Felder ausfüllen 🙂'; return; }
+  }
+  if(c.p+c.b<1){ $('msg').textContent='Bitte mindestens ein Paket oder einen Brief wählen.'; return; }
+  const data={
+    Name:$('fName').value, Telefon:$('fPhone').value, 'E-Mail':$('fMail').value||'–',
+    Adresse:$('fAddr').value+', Troisdorf', Wunschtermin:$('fDate').value,
+    Pakete:c.p, Briefe:c.b, Preis:eur(c.p*P+c.b*B)+' (bar)'
+  };
+  const btn=e.submitter||$('bookForm').querySelector('[type=submit]');
+  if(WEB3FORMS_KEY){
+    btn.disabled=true; btn.textContent='Wird gesendet …'; $('msg').textContent='';
+    try{
+      const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({access_key:WEB3FORMS_KEY, subject:`🚲 Neue Abholung: ${data.Name} – ${data.Wunschtermin}`, from_name:'Retourrex Website',
+          ...(($('fMail').value)?{email:$('fMail').value}:{}), ...data})});
+      const j=await r.json();
+      if(!j.success) throw new Error(j.message);
+      showDone(); return;
+    }catch(err){
+      $('msg').textContent='Senden hat nicht geklappt. Wir öffnen stattdessen Ihr E-Mail-Programm.';
+    }finally{ btn.disabled=false; btn.textContent='Anfrage senden ✉️'; }
+  }
+  const body='Hallo Retourrex,\n\nich möchte gern eine Abholung:\n\n'+Object.entries(data).map(([k,v])=>`${k}: ${v}`).join('\n')+'\n\nDanke!';
+  location.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Abholung – '+data.Name)}&body=${encodeURIComponent(body)}`;
+  showDone(true);
+});
+$('again').addEventListener('click',()=>{
+  $('bookForm').reset(); c.p=1; c.b=0; pristine=true; render(); $('msg').textContent='';
+  $('done').hidden=true; $('bookForm').hidden=false; $('fName').focus();
+});
+</script>
+</body>
+</html>

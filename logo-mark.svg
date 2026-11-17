@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 150" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Speed-Linien -->
+  <g stroke="#3c9a2e" stroke-width="7">
+    <path d="M8 62h30M16 78h22M4 94h34M14 110h22"/>
+  </g>
+  <!-- Paket hinten -->
+  <rect x="44" y="34" width="56" height="40" rx="4" fill="#3c9a2e"/>
+  <path d="M44 34l8-10h56l-8 10z" fill="#5cbf48"/>
+  <path d="M100 34l8-10v40l-8 10z" fill="#2b7520"/>
+  <path d="M66 24v18h12V24" stroke="#ffffff" stroke-width="2.5" fill="none" opacity=".85"/>
+  <!-- Räder -->
+  <g stroke="#111" stroke-width="8">
+    <circle cx="68" cy="112" r="28"/>
+    <circle cx="170" cy="112" r="28"/>
+    <!-- Rahmen -->
+    <path d="M68 112l28-34h46l28 34M96 78l20 34 26-34M110 70l6 8M142 78l-6-16h12"/>
+  </g>
+  <!-- Fahrer -->
+  <circle cx="128" cy="16" r="12" fill="#111"/>
+  <g stroke="#111" stroke-width="11">
+    <path d="M122 32l-14 36"/>
+    <path d="M120 38l20 22 8-2"/>
+    <path d="M108 70l26 16-14 26"/>
+  </g>
+  <!-- Brief vorne -->
+  <rect x="148" y="40" width="58" height="40" rx="5" fill="#3c9a2e"/>
+  <path d="M152 46l25 18 25-18" stroke="#ffffff" stroke-width="4.5"/>
+</svg>
